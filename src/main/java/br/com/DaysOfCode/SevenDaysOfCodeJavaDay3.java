@@ -10,12 +10,18 @@ import java.util.*;
 
 public class SevenDaysOfCodeJavaDay3 {
     public static void main(String[] args) throws Exception{
+        List<Movie> movies = parse();
+        movies.forEach(movie -> System.out.println(movie.getTitle()));
+    }
+
+    public static List<Movie> parse() throws Exception
+    {
         URI topMoviesUrl = URI.create("https://imdb-api.com/en/API/Top250Movies/k_66k2z665");
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(topMoviesUrl).GET().build();
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         String json = response.body();
 
@@ -29,6 +35,8 @@ public class SevenDaysOfCodeJavaDay3 {
         for(int i = 0; i < 250; i++){
             movies.add(new Movie(titles.get(i), urlImage.get(i), Double.parseDouble(rating.get(i)), Integer.parseInt(year.get(i))));
         }
+        return movies;
+
     }
 
     public static String[] parseJsonMovies(String json){
