@@ -1,6 +1,6 @@
 package br.com.DaysOfCode.model;
 
-public class Movie {
+public class Movie implements Comparable<Movie>{
 
     private String title;
     private String urlImage;
@@ -14,6 +14,11 @@ public class Movie {
         this.urlImage = urlImage;
         this.rating = rating;
         this.year = year;
+    }
+
+    @Override
+    public int compareTo(Movie outroMovie) {
+        return this.getRating().compareTo((outroMovie.getRating()));
     }
 
     public String getTitle() {
